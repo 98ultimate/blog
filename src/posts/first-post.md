@@ -8,6 +8,10 @@ categories:
 published: true
 ---
 
+<script>
+  import Counter from './counter.svelte'
+</script>
+
 ## Markdown
 
 Hey friends! 👋
@@ -17,3 +21,8 @@ function greet(name: string) {
 	console.log(`Hey ${name}! 👋`)
 }
 ```
+## Counter
+
+The counter is rendered inside Markdown.
+
+<Counter />

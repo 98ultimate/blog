@@ -1,25 +1,53 @@
 <script lang="ts">
 	import Footer from './footer.svelte'
 	import Header from './header.svelte'
+    import PageTransition from './transition.svelte'
 
 	import 'open-props/style'
 	import 'open-props/normalize'
 	import 'open-props/buttons'
 
 	import '../app.css'
+
+	import {
+		getLocaleFromNavigator,
+		isLoading,
+		register,
+		init,
+		locale
+	} from "svelte-i18n";
+
+	init({
+		fallbackLocale: "en",
+		initialLocale: getLocaleFromNavigator()
+	});
+
+	const handleLocaleChange = e => {
+		e.preventDefault();
+		locale.set(e.target.value);
+	};
+
+    export let data
 </script>
 
 <div class="layout">
-  <!-- Header -->
-	<Header />
 
-  <!-- Everything else -->
-	<main>
-		<slot />
-	</main>
+	{#if $isLoading}
+		<p>Loading</p>
+  	{:else}
+		<!-- Header -->
+		<Header />
 
-  <!-- Footer -->
-	<Footer />
+		<!-- Everything else -->
+		<main>
+			<PageTransition url={data.url}>
+				<slot />
+			</PageTransition>
+		</main>
+
+		<!-- Footer -->
+		<Footer />
+	{/if}
 </div>
 
 <style>
